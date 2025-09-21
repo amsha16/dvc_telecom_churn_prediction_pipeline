@@ -21,3 +21,11 @@ stages:
     - source\train.py
     outs:
     - model_dir\model.pkl
+  evaluate:
+    cmd: python source\evaluate.py model_dir\model.pkl 
+      processed_data\out_test.csv
+    deps:
+    - model_dir\model.pkl
+    - source\evaluate.py
+    outs:
+    - results\predictions_vs_actuals.csv

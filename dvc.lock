@@ -33,13 +33,30 @@ stages:
       size: 1466
     params:
       params.yaml:
-        train.class_weight:
+        train.class_weight: balanced
         train.max_depth: 5
         train.min_samples_leaf: 1
         train.min_samples_split: 2
-        train.n_estimators: 200
+        train.n_estimators: 100
     outs:
     - path: model_dir\model.pkl
       hash: md5
-      md5: 0408849cb99beddee235b4752849f99e
-      size: 844878
+      md5: ab64280b23c1979dcfbecdb379604e3a
+      size: 450334
+  evaluate:
+    cmd: python source\evaluate.py model_dir\model.pkl 
+      processed_data\out_test.csv
+    deps:
+    - path: model_dir\model.pkl
+      hash: md5
+      md5: ab64280b23c1979dcfbecdb379604e3a
+      size: 450334
+    - path: source\evaluate.py
+      hash: md5
+      md5: cc738685b4869fe3483ab130cbce810f
+      size: 3104
+    outs:
+    - path: results\predictions_vs_actuals.csv
+      hash: md5
+      md5: 830deb215e4fd88560709a7c5bb2c76e
+      size: 5912
